@@ -68,11 +68,36 @@ function validate (weights, values) {
   return !!(right +  first ===  left + second || right + second ===  left + first);
 }
 
+function pad(n, width, z) {
+  z = z || '0';
+  n = n + '';
+  return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+}
+
+function createPermutations(length) {
+  const max = Math.pow(2, length);
+  const result = [];
+
+  for (let i = 1; i < max; i++) {
+    const permutation = i.toString(2);
+
+    if (permutation.match(/1/g).length === 2) {
+      result.push(pad(permutation, length));
+    }
+  }
+
+  return result;
+}
+
 function ScaleBalancing(strArr) {
   const weights = JSON.parse(strArr[0]);
   const availableWeights = JSON.parse(strArr[1]);
+  const permutations = createPermutations(strArr.length);
+
   return weights;
 }
+
+console.log(createPermutations(10));
 
 // console.log(ScaleBalancing(["[5, 9]", "[1, 2, 6, 7]"]));
 
@@ -80,7 +105,6 @@ function ScaleBalancing(strArr) {
 
 // Input:"[3, 4]", "[1, 2, 7, 7]"
 // Output:"1"
-
 
 // Input:"[13, 4]", "[1, 2, 3, 6, 14]"
 // Output:"3,6"
