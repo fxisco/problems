@@ -35,7 +35,7 @@ function validate (weights, values) {
   while(index < responses.length) {
     total += parseInt(responses[index]);
 
-    if (total >= right) {
+    if (total > right) {
       break;
     }
 
@@ -52,7 +52,7 @@ function validate (weights, values) {
   while(index < responses.length) {
     total += parseInt(responses[index]);
 
-    if (total >= left) {
+    if (total > left) {
       break;
     }
 
@@ -65,7 +65,7 @@ function validate (weights, values) {
 
   const [ first, second ] = responses;
 
-  return !!(right +  first ===  left + second || right + second ===  left + first);
+  return !!(right +  parseInt(first) === left + parseInt(second) || right + parseInt(second) ===  left + parseInt(first));
 }
 
 function pad(n, width, z) {
@@ -80,8 +80,9 @@ function createPermutations(length) {
 
   for (let i = 1; i < max; i++) {
     const permutation = i.toString(2);
+    const ones = permutation.match(/1/g).length;
 
-    if (permutation.match(/1/g).length === 2) {
+    if (ones === 1 || ones === 2) {
       result.push(pad(permutation, length));
     }
   }
@@ -92,14 +93,32 @@ function createPermutations(length) {
 function ScaleBalancing(strArr) {
   const weights = JSON.parse(strArr[0]);
   const availableWeights = JSON.parse(strArr[1]);
-  const permutations = createPermutations(strArr.length);
+  const permutations = createPermutations(availableWeights.length);
+  let answer = 'not possible';
 
-  return weights;
+  permutations.forEach((item) => {
+    const option = [...item].reduce((accum, item, index) => {
+      if (item == 1) {
+        accum.push(availableWeights[index]);
+      }
+
+      return accum;
+    }, []);
+
+    const optionFormatted = option.join();
+    const possibleAnswer = validate(weights, optionFormatted);
+
+    if (possibleAnswer && possibleAnswer < answer.length) {
+      answer = optionFormatted;
+    }
+  });
+
+  return answer;
 }
 
-console.log(createPermutations(10));
+// console.log(createPermutations(10));
 
-// console.log(ScaleBalancing(["[5, 9]", "[1, 2, 6, 7]"]));
+console.log(ScaleBalancing(["[3, 4]", "[1, 2, 7]"] ));
 
 // Para mi la validacion es con buscando una permutacion
 
