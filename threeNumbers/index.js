@@ -16,8 +16,34 @@
 
 function ThreeNumbers(string) {
   const words = string.split(' ');
+  let isFinish = false;
+  let index = 0;
+  let response = false;
 
-  return words;
+  while ((index < words.length && !isFinish)) {
+    // Check if there are tree numbers together
+    const areThreeNumbersTogether = !!words[index].match(/\d{3}/g);
+    const digits = words[index].replace(/\D/g, "");
+
+    // Eliminate characters, the count should be three
+    const hasThreeDigits = digits.length === 3;
+
+    // Eliminate repeated characters
+    const hasUniqueDigits = digits.replace(/(.)(?=.*\1)/g, "").length === 3;
+
+    if (areThreeNumbersTogether || !hasThreeDigits || !hasUniqueDigits) {
+      isFinish = true;
+    }
+
+    index++;
+  }
+
+  if (!isFinish) {
+    response = true;
+  }
+
+
+  return response;
 }
 
 console.log(ThreeNumbers("2a3b5 w1o2rl3d g1gg92"));
