@@ -26,7 +26,7 @@
     let hour = parseInt(first);
     let min = parseInt(second);
 
-    if (meridiem === 'pm') {
+    if (meridiem === 'pm' || (hour === 12 && meridiem === 'am')) {
       hour += 12;
     }
 
@@ -51,26 +51,30 @@
  function getDifference(date1, date2) {
   let diff = 0;
 
-  if (date1.meridiem === date2.meridiem) {
-    diff = Math.abs(
-      (date1.hour * MINS_IN_HOUR + date1.min) -
-      (date2.hour * MINS_IN_HOUR + date2.min)
-    );
-  }
+  diff = Math.abs(
+    (date1.hour * MINS_IN_HOUR + date1.min) -
+    (date2.hour * MINS_IN_HOUR + date2.min)
+  );
 
-  // Convert to minutes
   return diff;
  }
 
  function TimeDifference(strArr) {
    // Convert to dates
   const dates = convertToDates(strArr);
+
   let i = 0;
   let j = 1;
+  let minDiff = Infinity;
 
   // Compare between two
   while (i < strArr.length - 1) {
-    getDifference(dates[i], dates[j]);
+    // Find difference
+    const diff = getDifference(dates[i], dates[j]);
+
+    if (diff < minDiff) {
+      minDiff = diff;
+    }
 
     if (j === strArr.length - 1) {
       i++;
@@ -80,12 +84,10 @@
     }
   }
 
-  // Find difference
-
-  // Return smallest
+  return minDiff;
  }
 
- console.log(TimeDifference(["1:10pm", "4:40am", "5:00pm"]))
+ console.log(TimeDifference(["10:00am", "11:45pm", "5:00am", "12:01am"]))
 
 // Input:"1:10pm", "4:40am", "5:00pm"
 // Output:230
