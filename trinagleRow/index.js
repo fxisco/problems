@@ -12,11 +12,60 @@
  * return the sum of 1 + 4 + 6 + 4 + 1 which is 16.
  */
 
-function TriangleRow(num) {
-  return num;
+function getRowSum(row = []) {
+  return row.reduce((accum, item) => {
+    accum+=item;
+
+    return accum;
+  }, 0);
 }
 
-console.log(TriangleRow(1));
+function sumByPairs(array = []) {
+  return array.reduce((accum, item, index) => {
+    if (index > 0) {
+      accum.push(array[index - 1] + item);
+    }
+
+    return accum;
+  }, []);
+}
+
+function TriangleRow(num) {
+  let index = -1;
+  let isFinished = false;
+  let array = [];
+  let sum;
+
+  while (!isFinished) {
+    let levelArray = [];
+
+    if (index >= 1) {
+      sum = sumByPairs(array);
+      levelArray  = [
+        1,
+        ...sum
+      ];
+    } else {
+      levelArray = [
+        ...array
+      ];
+    }
+
+    levelArray.push(1);
+
+    if (index === num - 1) {
+      sum = getRowSum(levelArray);
+      isFinished = true;
+    }
+
+    array = [...levelArray];
+    index++;
+  }
+
+  return sum;
+}
+
+console.log(TriangleRow(4));
 
 
 // Input:1
