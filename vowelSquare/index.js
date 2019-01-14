@@ -22,17 +22,24 @@
  * The input matrix will at least be of size 2x2.
  */
 
+ function isVowel(string) {
+  return !!(string.match(/^[aeiou]$/));
+ }
+
  function VowelSquare(strArr) {
-  return strArr
+  const array = strArr.reduce((accum, item, currentIndex) => {
+    accum[currentIndex] = item.split('');
+
+    return accum;
+  }, []);
+  return strArr;
  }
 
  console.log(VowelSquare(["aqrst", "ukaei", "ffooo"]));
 
-// Input:"aqrst", "ukaei", "ffooo"
 
+ // Input:"aqrst", "ukaei", "ffooo"
 // Output:"1-2"
 
-
 // Input:"gg", "ff"
-
 // Output:"not found"
