@@ -22,6 +22,13 @@
  * The input matrix will at least be of size 2x2.
  */
 
+ function isVowelSquare(array, x, y) {
+  return !!(isVowel(array[y][x]) &&
+          isVowel(array[y + 1][x]) &&
+          isVowel(array[y][x + 1]) &&
+          isVowel(array[y + 1][x + 1]));
+ }
+
  function isVowel(string) {
   return !!(string.match(/^[aeiou]$/));
  }
@@ -32,10 +39,38 @@
 
     return accum;
   }, []);
-  return strArr;
+
+  let x = 0;
+  let y = 0;
+  let response = 'not found';
+  let isFinished = false;
+  const maxX = array[0].length;
+  const maxY = strArr.length;
+
+  while (!isFinished) {
+    if (y + 1 > maxY - 1) {
+      isFinished = true;
+      continue;
+    }
+
+    if (isVowelSquare(array, x, y)) {
+      isFinished = true;
+      response = `${y}-${x}`;
+      continue;
+    }
+
+    if (x + 1 === maxX - 1) {
+      y++;
+      x = 0;
+    } else {
+      x++;
+    }
+  }
+
+  return response;
  }
 
- console.log(VowelSquare(["aqrst", "ukaei", "ffooo"]));
+ console.log(VowelSquare(["gg", "ff"]));
 
 
  // Input:"aqrst", "ukaei", "ffooo"
