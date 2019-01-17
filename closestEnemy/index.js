@@ -14,21 +14,26 @@
 function ClosestEnemy(arr) {
   const arrayLetters = [...arr];
   const indexOfOne = arrayLetters.indexOf(1);
-  const firstIndexOfTwo = arrayLetters.lastIndexOf(2);
-  const lastIndexOfTwo = arrayLetters.lastIndexOf(2);
+  const firstIndexOfTwo = arrayLetters.indexOf(2);
+  let response = 0;
 
-  let response = indexOfTwo >= 0 ? Math.abs(indexOfTwo - indexOfOne) : 0;
+  if (firstIndexOfTwo > -1) {
+    const lastIndexOfTwo = arrayLetters.lastIndexOf(2);
+
+    if (firstIndexOfTwo === lastIndexOfTwo || indexOfOne < firstIndexOfTwo) {
+      response = Math.abs(firstIndexOfTwo - indexOfOne);
+    } else {
+      response = Math.abs(lastIndexOfTwo - indexOfOne);
+    }
+  }
 
   return response;
 }
 
- console.log(ClosestEnemy([1, 0, 0, 0, 2, 2, 2]));
-
-
+ console.log(ClosestEnemy([0, 0, 1, 0, 0, 2, 0, 2]));
 
 // Input:1, 0, 0, 0, 2, 2, 2
 // Output:4
-
 
 // Input:2, 0, 0, 0, 2, 2, 1, 0
 // Output:1
