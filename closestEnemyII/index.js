@@ -18,6 +18,18 @@
  * program should return a 0.
  */
 
+function ClosestEnemyII(strArr) {
+  const array = strArr.reduce((accum, item) => {
+    accum.push(item.split(''));
+
+    return accum;
+  }, []);
+
+  return array;
+}
+
+ console.log(ClosestEnemyII(["000", "100", "200"]));
+
 
 // Input:"000", "100", "200"
 // Output:1
