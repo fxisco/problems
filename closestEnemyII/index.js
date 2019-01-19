@@ -18,22 +18,63 @@
  * program should return a 0.
  */
 
-function ClosestEnemyII(strArr) {
-  const array = strArr.reduce((accum, item) => {
-    accum.push(item.split(''));
-
-    return accum;
-  }, []);
-
-  return array;
+function createCoord(x, y) {
+  return {
+    x,
+    y
+  };
 }
 
- console.log(ClosestEnemyII(["000", "100", "200"]));
+function ClosestEnemyII(strArr) {
+  let oneCoords;
+  let twoCoords = [];
+  let stepsCount = Infinity;
 
+  strArr.forEach((element, yIndex) => {
+    const xOneIndex = element.indexOf(1);
+    const xTwoIndex = element.indexOf(2);
+
+    if (xOneIndex > -1) {
+      oneCoords = createCoord(xOneIndex, yIndex);
+    }
+
+    if (xTwoIndex > -1) {
+      twoCoords.push(createCoord(xTwoIndex, yIndex));
+    }
+  });
+
+  const widht = strArr[0].length;
+  const height = strArr.length;
+
+  twoCoords.forEach(item => {
+    const diffYUp = oneCoords.y + (height - item.y);
+    const diffYDown = Math.abs(oneCoords.y - item.y);
+    const diffY = diffYDown < diffYUp ? diffYDown : diffYUp;
+
+    const diffXFwd = Math.abs(oneCoords.x - item.x);
+    const diffXBwd = oneCoords.x + (widht - item.x);
+    const diffX = diffXFwd < diffXBwd ? diffXFwd : diffXBwd;
+
+    const steps = diffY + diffX;
+
+    if (steps < stepsCount) {
+      stepsCount = steps;
+    }
+  });
+
+  return stepsCount === Infinity ? 0 : stepsCount;
+}
+
+// Input "01000", "00020", "00000", "00002", "02002"
+// Output: 1
+
+// Input: "0000000", "0001000", "0000000", "0000000", "0000000", "2000000", "0000000"
+// Output: 6
+
+//  console.log(ClosestEnemyII(["0000000", "0001000", "0000000", "0000000", "0000000", "2000000", "0000000"]));
 
 // Input:"000", "100", "200"
 // Output:1
-
 
 // Input:"0000", "2010", "0000", "2002"
 // Output:2
