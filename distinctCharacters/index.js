@@ -9,11 +9,20 @@
  * up to 9.
  */
 
+const MIN_CHAR_QTY = 10;
 function DistinctCharacters(str) {
-  return str;
+  const chars = [...str].reduce((accum, item) => {
+    if (!accum[item]) {
+      accum[item] = item;
+    }
+
+    return accum;
+  }, {});
+
+  return String(Object.keys(chars).length >= MIN_CHAR_QTY);
 }
 
-console.log(DistinctCharacters('abc123kkmmmm?'))
+console.log(DistinctCharacters('12334bbmma:=6'))
 
 // Input:"12334bbmma:=6"
 // Output:"true"
