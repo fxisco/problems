@@ -13,6 +13,8 @@
 
 function QuestionsMarks(str) {
   let response = false;
+  const sanitaizedStr = str.toLowerCase().replace(/[a-z]/g, '');
+
 
   return response;
 }
