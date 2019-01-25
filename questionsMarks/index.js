@@ -11,19 +11,41 @@
  * exactly 3 question marks between 6 and 4, and 3 question marks between 5 and 5 at the end of the string.
  */
 
-function QuestionsMarks(str) {
-  let response = false;
-  const sanitaizedStr = str.toLowerCase().replace(/[a-z]/g, '');
+const EXPECTED_VALUE = 10;
+const EXPECTED_QUESTION_MARKS_COUNT = 3;
 
+function QuestionsMarks(str) {
+  const sanitaizedStr = str.toLowerCase().replace(/[a-z]/g, '');
+  const matches = sanitaizedStr.match(/(\d\?+\d)/g) || [];
+  let response = true;
+
+  console.log(matches);
+  matches.forEach(item => {
+    const questionMarksCount = item.match(/[?]+/)[0].length;
+
+    // console.log(questionMarksCount, item[0], item[item.length - 1]);
+
+    if (parseInt(item[0]) + parseInt(item[item.length - 1]) === EXPECTED_VALUE && questionMarksCount !== EXPECTED_QUESTION_MARKS_COUNT) {
+      response = false;
+    }
+  });
 
   return response;
 }
 
 
-console.log(QuestionsMarks('arrb6???4xxbl5???eee5'));
+
+
+console.log(QuestionsMarks('5??aaaaaaaaaaaaaaaaaaa?5?5'));
 // Input:"aa6?9"
 // Output:"false"
 
 // Input:"acc?7??sss?3rr1??????5"
 // Output:"true"
 
+
+// [ '9???1', '9??1' ]
+// For the input "9???1???9??1???9" your output was incorrect. The correct answer is false.
+
+
+// 2. For the input "5??aaaaaaaaaaaaaaaaaaa?5?5" your output was incorrect. The correct answer is false.
