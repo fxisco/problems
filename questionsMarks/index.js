@@ -16,21 +16,36 @@ const EXPECTED_QUESTION_MARKS_COUNT = 3;
 
 function QuestionsMarks(str) {
   const sanitaizedStr = str.toLowerCase().replace(/[a-z]/g, '');
-  const matches = sanitaizedStr.match(/(\d\?+\d)/g) || [];
-  let response = true;
+  const characters = sanitaizedStr.split('');
+  const integersIndex = [];
+  const expectedValuesPairs = [];
+  const expectedQuestionsMarksPairs = [];
 
-  console.log(matches);
-  matches.forEach(item => {
-    const questionMarksCount = item.match(/[?]+/)[0].length;
-
-    // console.log(questionMarksCount, item[0], item[item.length - 1]);
-
-    if (parseInt(item[0]) + parseInt(item[item.length - 1]) === EXPECTED_VALUE && questionMarksCount !== EXPECTED_QUESTION_MARKS_COUNT) {
-      response = false;
+  [...characters].forEach((item, index) => {
+    if (item.match(/[0-9]/)) {
+      integersIndex.push(index);
     }
   });
 
-  return response;
+  for(let i = 0; i < integersIndex.length - 1; i++) {
+    const indexA = parseInt(integersIndex[i]);
+    const indexB = parseInt(integersIndex[i +  1]);
+    const itemA = characters[indexA];
+    const itemB = characters[indexB];
+    const substring = sanitaizedStr.substring(indexA, indexB + 1);
+
+    if (parseInt(itemA) +  parseInt(itemB) === EXPECTED_VALUE) {
+      const key = `${itemA}-${itemB}`;
+
+      expectedValuesPairs.push(key);
+
+      if (substring.match(/(\?{3})/)) {
+        expectedQuestionsMarksPairs.push(key);
+      }
+    }
+  }
+
+  return expectedValuesPairs.length > 0 && expectedQuestionsMarksPairs.length === expectedValuesPairs.length;
 }
 
 
@@ -43,8 +58,6 @@ console.log(QuestionsMarks('5??aaaaaaaaaaaaaaaaaaa?5?5'));
 // Input:"acc?7??sss?3rr1??????5"
 // Output:"true"
 
-
-// [ '9???1', '9??1' ]
 // For the input "9???1???9??1???9" your output was incorrect. The correct answer is false.
 
 
