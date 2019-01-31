@@ -6,6 +6,19 @@
  * return the string 100111103 because d = 100, o = 111, g = 103.
  */
 
+function ASCIIConversion(str) {
+  return [...str].reduce((accum, item) => {
+    if (item === ' ') {
+      accum += item;
+    } else {
+      accum += item.charCodeAt(0);
+    }
+
+    return accum;
+  }, '');
+}
+
+console.log(ASCIIConversion('hello world'));
 
 // Input:"hello world"
 // Output:"104101108108111 119111114108100"
