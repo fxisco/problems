@@ -9,10 +9,10 @@
  */
 
  function SnakeCase(str) {
-   return str;
+   return str.toLowerCase().replace(/\W/g, '_');
  }
 
- console.log(SnakeCase('BOB loves-coding'))
+ console.log(SnakeCase('a b c d-e-f%g'))
 
 // Input:"cats AND*Dogs-are Awesome"
 // Output:"cats_and_dogs_are_awesome"
