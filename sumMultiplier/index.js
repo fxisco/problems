@@ -11,8 +11,43 @@
 
 
 function SumMultiplier(arr) {
-  return arr;
+  let response = false;
+  let isFinished = false;
+
+  const sum = arr.reduce((accum, item) => {
+    return accum + item;
+  }, 0);
+
+  let i = 0;
+  let j = 1;
+
+  while (!isFinished) {
+
+    if (j === arr.length) {
+      i++;
+      j = i + 1;
+
+      continue;
+    }
+
+    if (i === arr.length) {
+      isFinished = true;
+      break;
+    }
+
+    if (arr[i] * arr[j] > sum * 2) {
+      isFinished = true;
+      response = true;
+    }
+
+    j++;
+  }
+
+
+  return response;
 }
+
+console.log(SumMultiplier([1, 1, 2, 10, 3, 1, 12]));
 
 // Input:[2, 2, 2, 2, 4, 1]
 // Output:"false"
