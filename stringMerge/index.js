@@ -10,10 +10,24 @@
  * asterisk in the center.
  */
 
+const WILDCARD = '*';
+
+function StringMerge(str) {
+  const strArr = [...str];
+  const index = strArr.findIndex((item) => item === WILDCARD);
+  let result = '';
+
+  for (let i = 0, j = index + 1; i < index; i++, j++) {
+    result += `${strArr[i]}${strArr[j]}`;
+  }
+
+  return result;
+}
+
+console.log(StringMerge("123hg*aaabb"));
 
 // Input:"aaa*bbb"
 // Output:"ababab"
-
 
 // Input:"123hg*aaabb"
 // Output:"1a2a3ahbgb"
