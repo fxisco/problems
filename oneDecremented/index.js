@@ -10,10 +10,22 @@
  */
 
 function OneDecremented(num) {
-  return num;
+  let result = 0;
+  let i = 0;
+  const numbersStrArr = [...num.toString()];
+
+  while (i < numbersStrArr.length - 1) {
+    if (parseInt(numbersStrArr[i]) - 1 === parseInt(numbersStrArr[i + 1])) {
+      result++;
+    }
+
+    i++;
+  }
+
+  return result;
 }
 
-console.log(OneDecremented(5655984));
+console.log(OneDecremented(9876541110));
 
 // Input:56
 // Output:0
