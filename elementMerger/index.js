@@ -12,10 +12,21 @@
  */
 
 function ElementMerger(arr) {
-  return arr;
+  if (arr.length === 1) {
+    return arr[0];
+  }
+
+  const array = arr.reduce((accum, item, index) => {
+    if (index < arr.length - 1) {
+      accum.push(Math.abs(item - arr[index + 1]));
+    }
+    return accum;
+  }, []);
+
+  return ElementMerger(array);
 }
 
-console.log(ElementMerger([4, 5, 1, 2, 7]));
+console.log(ElementMerger([1, 1, 1, 2]));
 
 
 // Input:[5, 7, 16, 1, 2]
