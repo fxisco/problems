@@ -8,6 +8,59 @@
  *
  */
 
+function getFactors(num) {
+  let dividend = 1;
+  let factors = [];
+
+  while(dividend <= num) {
+    if (num % dividend === 0) {
+      factors.push(dividend);
+    }
+
+    dividend++;
+  }
+
+  return factors;
+}
+
+function sortDescending (a, b) {
+  if (a > b) {
+    return -1;
+  } else if (a < b) {
+    return 1;
+  }
+
+  return 0;
+}
+
+function GCF(arr) {
+  const groupA = getFactors(arr[0]).sort(sortDescending);
+  const groupB = getFactors(arr[1]).sort(sortDescending);
+  let response;
+  let i = 0, j = 0;
+
+  while (i < groupA.length) {
+    if (groupA[i] === groupB[j]) {
+      response = groupA[i];
+
+      break;
+    }
+
+    if (j === groupB.length - 1) {
+      i++;
+      j = 0;
+
+      continue;
+    }
+
+    j++;
+  }
+
+  return response;
+}
+
+console.log(GCF([12, 28]));
+
 // Input:[1, 6]
 // Output:1
 
