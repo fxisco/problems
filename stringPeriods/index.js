@@ -30,8 +30,6 @@ function StringPeriods(str) {
     const regex = new RegExp(test, 'g');
     const matches = str.match(regex);
 
-    console.log(matches.join(''), str);
-
     if (matches.length > 1 && matches.join('') === str) {
       result = test;
     }
