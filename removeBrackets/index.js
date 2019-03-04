@@ -13,10 +13,23 @@
 
 
 function RemoveBrackets(str) {
-  return str;
+  let isFinished = false;
+
+  while(!isFinished) {
+    const match = str.match(/\(\)/);
+
+    if (match) {
+      str = str.replace('()', '');
+    } else {
+      isFinished = true;
+    }
+  }
+
+
+  return str.length;
 }
 
-console.log(RemoveBrackets('(()))'));
+console.log(RemoveBrackets('(()('));
 
 // Input:"(())()((("
 // Output:3
