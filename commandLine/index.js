@@ -1,5 +1,6 @@
 /**
  * Challenge
+ *
  * Have the function CommandLine(str) take the str parameter being passed which represents the parameters
  * given to a command in an old PDP system. The parameters are alphanumeric tokens (without spaces)
  * followed by an equal sign and by their corresponding value. Multiple parameters/value pairs can be
@@ -15,13 +16,29 @@
  */
 
 function CommandLine(str) {
-  return str;
+  const splittedWords = str.split(/([\w]+)\=/g);
+
+  splittedWords.shift();
+
+  return splittedWords.reduce((accum, item, index) => {
+    if (index % 2 === 0) {
+      accum += `${item.length}=${splittedWords[index + 1].replace(/\s+$/g, '').length} `;
+    }
+
+    return accum;
+  }, '').trim();
 }
 
-console.log(CommandLine('SampleNumber=3234 provider=Dr. M. Welby patient=John Smith priority=High'));
+console.log(CommandLine('origin=2;3 destination=7;9 stops= 3;6 8;9 12;17'));
 
 // Input:"letters=A B Z T numbers=1 2 26 20 combine=true"
 // Output:"7=7 7=9 7=4"
 
 // Input:"a=3 b=4 a=23 b=a 4 23 c="
 // Output:"1=1 1=1 1=2 1=6 1=0"
+
+// Input:"origin=2;3 destination=7;9 stops= 3;6 8;9 12;17"
+// Output:"6=3 11=3 5=14"
+
+// Input:"name=A value= 3 name=B value=8"
+// Output:"4=1 5=2 4=1 5=1"
