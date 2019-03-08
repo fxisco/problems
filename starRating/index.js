@@ -22,15 +22,13 @@ function StarRating(str) {
     response.push('full');
   }
 
-  if (remainingStars <= 0.25) {
-    response.push('empty');
-  } else if (remainingStars > 0.25 && remainingStars <= 0.5) {
+  if (remainingStars > 0.25 && remainingStars <= 0.75) {
     response.push('half');
-  } else {
+  } else if (remainingStars > 0.5) {
     response.push('full');
   }
 
-  const length = remainingStars > 0.75 ? (4 - stars) : (5 - stars);
+  const length = 5 - response.length;
 
   for (let i = 0; i < length; i++) {
     response.push('empty');
@@ -39,7 +37,7 @@ function StarRating(str) {
   return response.join(' ');
 }
 
-console.log(StarRating('0.0'));
+console.log(StarRating('4.63'));
 
 // Input:"0.38"
 // Output:"half empty empty empty empty"
