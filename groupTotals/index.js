@@ -13,10 +13,25 @@
  */
 
 function GroupTotals(strArr) {
-  return strArr;
+  const sum = strArr.reduce((accum, item) => {
+    const [ key, value ] = item.split(':');
+    const valueParsed = parseInt(value);
+
+    if (accum[key]) {
+      accum[key] += valueParsed;
+    } else {
+      accum[key] = valueParsed;
+    }
+
+    return accum;
+  }, {});
+
+  const resultFiltered = Object.keys(sum).filter((item) => sum[item] !== 0).sort();
+
+  return resultFiltered.map((item) => `${item}:${sum[item]}`).join();
 }
 
-console.log(GroupTotals(["X:-1", "Y:1", "X:-4", "B:3", "X:5"]));
+console.log(GroupTotals(["Z:0", "A:-1"]));
 
 // Input:["X:-1", "Y:1", "X:-4", "B:3", "X:5"]
 // Output:"B:3,Y:1"
