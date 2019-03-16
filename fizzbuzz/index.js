@@ -12,10 +12,26 @@
  */
 
 function FizzBuzz(num) {
-  return num;
+  let response = [];
+
+  [...Array(num)].forEach((_, index) => {
+    const number = index + 1;
+
+    if (number % 3 === 0 && number % 5 === 0) {
+      response.push('FizzBuzz');
+    } else if (number % 3 === 0) {
+      response.push('Fizz');
+    } else if (number % 5 === 0) {
+      response.push('Buzz');
+    } else {
+      response.push(`${number}`);
+    }
+  });
+
+  return response.join(' ').trim();
 }
 
-console.log(FizzBuzz(3));
+console.log(FizzBuzz(8));
 
 // Input:3
 // Output:"1 2 Fizz"
