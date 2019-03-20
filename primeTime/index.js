@@ -7,7 +7,13 @@
  */
 
 function PrimeTime(num) {
-  return num;
+  const hasDividers = [...Array(num)].some((_, index) => {
+    const number = index + 1;
+
+    return number !== 1 && number !== num && num % number === 0;
+  });
+
+  return !hasDividers;
 }
 
 console.log(PrimeTime(19));
