@@ -13,20 +13,39 @@ import "fmt"
 	The range for both parameters will be from 1 to 10^3.
 */
 
+func getFactors(num int) map[int]int {
+	dic := make(map[int]int)
+
+	for i := 1; i <= num; i++ {
+		if num%i == 0 {
+			dic[i] = i
+		}
+	}
+
+	return dic
+}
+
 func Division(num1 int, num2 int) int {
+	num1Factors := getFactors(num1)
+	num2Factors := getFactors(num2)
+	gcf := -1
 
-	// code goes here
-	// Note: feel free to modify the return type of this function
-	return num1
+	for _, v := range num1Factors {
+		_, ok := num2Factors[v]
 
+		if ok && v > gcf {
+			gcf = v
+		}
+	}
+
+	return gcf
 }
 
 func main() {
 
 	// do not modify below here, readline is our function
 	// that properly reads in the input for you
-	fmt.Println(Division(12, 12))
-
+	fmt.Println(Division(15, 60))
 }
 
 // Input:7 & num2 = 3
