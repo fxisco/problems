@@ -1,5 +1,6 @@
 /*
 	Challenge
+
 	Have the function StringScramble(str1,str2) take both parameters being passed and
 	return the string true if a portion of str1 characters can be rearranged to match str2,
 	otherwise return the string false.
@@ -10,22 +11,26 @@
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 func StringScramble(str1 string, str2 string) string {
+	for _, char := range str2 {
+		if strings.ContainsRune(str1, char) {
+			index := strings.IndexRune(str1, char)
+			str1 = str1[0:index] + str1[index+1:]
+		} else {
+			return "false"
+		}
+	}
 
-	// code goes here
-	// Note: feel free to modify the return type of this function
-	return str1
-
+	return "true"
 }
 
 func main() {
-
-	// do not modify below here, readline is our function
-	// that properly reads in the input for you
-	fmt.Println(StringScramble("cdore", "coder"))
-
+	fmt.Println(StringScramble("h3llko", "hello"))
 }
 
 // Input:"cdore" & str2= "coder"
