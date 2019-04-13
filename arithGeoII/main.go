@@ -17,15 +17,45 @@ package main
 
 import "fmt"
 
-func ArithGeoII(arr []int) int {
-	return arr[0]
+func checkArith(arr []int) bool {
+	differences := make(map[int]int)
+
+	for i := 0; i < len(arr)-1; i++ {
+		difference := arr[i+1] - arr[i]
+		differences[difference] = difference
+	}
+
+	return len(differences) == 1
+}
+
+func checkGeometric(arr []int) bool {
+	ratios := make(map[int]int)
+
+	for i := 0; i < len(arr)-1; i++ {
+		ratio := arr[i+1] / arr[i]
+		ratios[ratio] = ratio
+	}
+
+	return len(ratios) == 1
+}
+
+func ArithGeoII(arr []int) string {
+	if checkArith(arr) {
+		return "Arithmetic"
+	}
+
+	if checkGeometric(arr) {
+		return "Geometric"
+	}
+
+	return "-1"
 }
 
 func main() {
 
 	// do not modify below here, readline is our function
 	// that properly reads in the input for you
-	fmt.Println(ArithGeoII([]int{5, 10, 15}))
+	fmt.Println(ArithGeoII([]int{10, 110, 210, 310, 410, 511}))
 
 }
 
