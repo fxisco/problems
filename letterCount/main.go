@@ -13,21 +13,62 @@
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
+
+func wordLetterCount(str string) map[string]int {
+	count := make(map[string]int)
+
+	for i := 0; i < len(str); i++ {
+		letter := string(str[i])
+
+		if _, ok := count[letter]; ok {
+			count[letter]++
+		} else {
+			count[letter] = 1
+		}
+	}
+
+	return count
+}
+
+func repetedLettersCount(word map[string]int) int {
+	count := 0
+
+	for _, item := range word {
+		if item > 1 {
+			count += item
+		}
+	}
+
+	return count
+}
 
 func LetterCount(str string) string {
+	counter := make(map[string]map[string]int)
+	words := strings.Split(str, " ")
+	max := -1
+	maxWord := "-1"
 
-	// code goes here
-	// Note: feel free to modify the return type of this function
-	return str
+	for _, item := range words {
+		counter[item] = wordLetterCount(item)
 
+		if repeatedCount := repetedLettersCount(counter[item]); repeatedCount > 0 && repeatedCount > max {
+			maxWord = item
+			max = repeatedCount
+		}
+	}
+
+	return maxWord
 }
 
 func main() {
 
 	// do not modify below here, readline is our function
 	// that properly reads in the input for you
-	fmt.Println(LetterCount("Hello apple pie"))
+	fmt.Println(LetterCount("No words"))
 
 }
 
