@@ -14,20 +14,55 @@ package main
 
 import "fmt"
 
+const lowerCaseHighestValue = 122
+const lowerCaseLowestValue = 97
+const upperCaseHighestValue = 90
+const upperCaseLowestValue = 65
+
+func isLowerCaseAlphabetic(letter rune) bool {
+	return letter >= lowerCaseLowestValue && letter <= lowerCaseHighestValue
+}
+
+func isUpperAlphabetic(letter rune) bool {
+	return letter >= upperCaseLowestValue && letter <= upperCaseHighestValue
+}
+
+func getMoveCharacterFn(letter rune, num int) func(int, int) rune {
+	return func(highestValue int, lowestValue int) (character rune) {
+		if int(letter)+num > highestValue {
+			difference := lowestValue + ((int(letter) + num) - highestValue) - 1
+			character = rune(difference)
+		} else {
+			character = rune(int(letter) + num)
+		}
+
+		return
+	}
+}
+
 func CaesarCipher(str string, num int) string {
+	result := ""
 
-	// code goes here
-	// Note: feel free to modify the return type of this function
-	return str
+	for _, letter := range str {
+		character := letter
+		moveCharaterFn := getMoveCharacterFn(character, num)
 
+		if isLowerCaseAlphabetic(character) {
+			character = moveCharaterFn(lowerCaseHighestValue, lowerCaseLowestValue)
+		}
+
+		if isUpperAlphabetic(character) {
+			character = moveCharaterFn(upperCaseHighestValue, upperCaseLowestValue)
+		}
+
+		result += string(character)
+	}
+
+	return result
 }
 
 func main() {
-
-	// do not modify below here, readline is our function
-	// that properly reads in the input for you
-	fmt.Println(CaesarCipher("Hello", 4))
-
+	fmt.Println(CaesarCipher("dogs", 8))
 }
 
 // Input:"Hello" & num = 4
