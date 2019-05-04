@@ -12,22 +12,23 @@
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sort"
+)
 
 func Consecutive(arr []int) int {
+	sort.Ints(arr)
 
-	// code goes here
-	// Note: feel free to modify the return type of this function
-	return arr[0]
+	first, last := arr[0], arr[len(arr)-1]
+	difference := last - first
 
+	return difference - (len(arr) - 1)
 }
 
 func main() {
 
-	// do not modify below here, readline is our function
-	// that properly reads in the input for you
-	fmt.Println(Consecutive([]int{5, 10, 15}))
-
+	fmt.Println(Consecutive([]int{-2, 10, 4}))
 }
 
 // Input:[]int {5,10,15}
