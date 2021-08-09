@@ -5,11 +5,10 @@ const SUBSTITUTIONS = {
 };
 
 function StringReduction(str) {
-  let isFinished = false;
   let result = str.slice();
   let index = 0;
 
-  while (!isFinished) {
+  while (true) {
     if (index === result.length - 1) {
       break;
     }
